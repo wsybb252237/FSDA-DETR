@@ -1,0 +1,160 @@
+import os, sys
+import torch, json
+import numpy as np
+
+from main import build_model_main
+from util.slconfig import SLConfig
+from util.visualizer import COCOVisualizer
+from util import box_ops
+
+import datasets.transforms as T
+from PIL import Image, ImageDraw, ImageFont
+
+colors = [
+    (1, 0, 0),       # 鲜红色
+    # (1, 1, 0),       # 鲜黄色
+    # (0.5, 0.5, 0),   # 深黄色
+    # (1, 0, 1),  # 鲜紫色
+    # (1, 0, 0),  # 鲜红色
+    # (0.5647, 0.6902, 0.8157),  # 浅蓝
+    # (0, 1, 0),       # 鲜绿色
+    # (0, 0, 1),       # 鲜蓝色
+    # (1, 0, 1),       # 鲜紫色
+    # (1, 1, 0),       # 鲜黄色
+    # (0, 1, 1),       # 鲜青色
+    # (1, 0.5, 0),     # 橙色
+    # (0.5, 0, 0.5),   # 深紫色
+    # (0, 0.5, 0.5),   # 深青色
+    # (0.5, 0.5, 0),   # 深黄色
+]
+
+
+
+
+
+
+# colors = [
+#     # (0.9020, 0.5412, 0.4902),  # 橙
+#     # (0.3804, 0.5216, 0.4863),  # 深绿
+#     # (0.3804, 0.2216, 0.8863),  # 红
+#     # (0.8314, 0.5686, 0.8510),  # 紫
+#     # (0.6392, 0.8078, 0.7765),  # 浅绿
+#     (1, 1, 0),  # 黄
+#     (0.8314, 0.5686, 0.8510),  # 紫
+#     # (0.5647, 0.6902, 0.8157),  # 浅蓝
+#     # (0.56, 0.56, 0.56),  # 灰
+#     (0.9020, 0.5412, 0.4902),  # 橙
+# ]
+int_colors = []
+for color in colors:
+    int_color = [int(i * 255) for i in color]
+    int_colors.append(int_color)
+
+print(int_colors)
+
+def visualize_and_save(image, pred_dict, save_path):
+    """
+    使用PIL可视化检测结果并保存，考虑归一化坐标。
+
+    参数:
+    - image: PIL图像对象。
+    - pred_dict: 预测字典，包含'boxes', 'box_label'和'size'键。
+    - save_path: 图像保存路径。
+    """
+    # 获取图像尺寸
+    img_width, img_height = image.size
+
+    draw = ImageDraw.Draw(image)
+
+    # 尝试加载默认字体，否则不使用字体
+    try:
+        font = ImageFont.truetype('arial.ttf', 20)
+    except IOError:
+        font = None
+
+    # 遍历检测框和标签
+    for box, label in zip(pred_dict['boxes'], pred_dict['box_label']):
+        # 将归一化坐标转换为实际像素坐标
+        cx, cy, w, h = box
+        x1 = (cx - w / 2) * img_width
+        y1 = (cy - h / 2) * img_height
+        x2 = (cx + w / 2) * img_width
+        y2 = (cy + h / 2) * img_height
+
+        # 绘制矩形框
+        draw.rectangle([x1, y1, x2, y2], outline= tuple(int_colors[label]), width=4)
+
+
+
+    # 保存图像
+    image.save(save_path)
+
+
+# 示例使用代码，这里假设'image'已经是一个PIL图像对象
+# visualize_and_save(image, pred_dict, 'path_to_save_image.jpg')
+
+
+def make_dirs(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+model_config_path = "/data7/binbinyang/DINO-Few-shot-DA_混合训练策略_CMA_特征对齐/config/DA/HRRSD2SSDD/DINO_4scale.py" # change the path of the model config file
+model_checkpoint_path = "/data7/binbinyang/DINO-Few-shot-DA_混合训练策略_CMA_特征对齐/logs/10.31_18张补充实验2_HRRSD2SSDD__更改为韩师兄所用域鉴别器_损失部分不改动_只对前2层引入风格聚类的思想_韩师兄所用域鉴别器_36_epoches_DINO_HRRSD2SSDD_目标域混合训练_特征对齐/R50-MS4/checkpoint0016.pth" # change the path of the model checkpoint
+
+# See our Model Zoo section in README.md for more details about our pretrained models.
+args = SLConfig.fromfile(model_config_path)
+args.device = 'cuda'
+model, criterion, postprocessors = build_model_main(args)
+checkpoint = torch.load(model_checkpoint_path, map_location='cpu')
+model.load_state_dict(checkpoint['model'], strict=False)
+_ = model.eval()
+
+
+
+# transform images
+transform = T.Compose([
+    T.RandomResize([800], max_size=2048),    T.ToTensor(),
+    T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+])
+
+if __name__ == '__main__':
+    img_dir = '/data4/ybb/data/域适应目标检测/remote_sensing_data/SSDD_Few_shot/val/images'
+    save_dir = '/data7/binbinyang/DINO-Few-shot-DA_混合训练策略_CMA_特征对齐/AsyFOD推理结果图_HRRSD2SSDD'
+
+
+    label_list = ['ship']
+
+    #卡阈值：
+    thershold = 0.4  # set a thershold
+
+    img_list = os.listdir(img_dir)
+    fliter_img_list = img_list
+
+    for n,img_name in enumerate(fliter_img_list):
+        print('已处理:',n)
+        img_path = os.path.join(img_dir,img_name)
+        image_ori = Image.open(img_path).convert("RGB") # load image=
+        image, _ = transform(image_ori,None)
+
+        save_img_path = os.path.join(save_dir,img_name)
+
+        # predict images
+        output= model.cuda()(image[None].cuda())
+
+        #结果可视化
+        output = postprocessors['bbox'](output, torch.Tensor([[1.0, 1.0]]).cuda())[0]
+        scores = output['scores']
+        labels = output['labels']
+        boxes = box_ops.box_xyxy_to_cxcywh(output['boxes'])
+
+        select_mask = scores > thershold
+
+        box_label = [int(item) for item in labels[select_mask]]
+        pred_dict = {
+            'boxes': boxes[select_mask],
+            'size': torch.Tensor([image.shape[1], image.shape[2]]),
+            'box_label': box_label
+        }
+
+
+        visualize_and_save(image_ori, pred_dict, save_img_path)
