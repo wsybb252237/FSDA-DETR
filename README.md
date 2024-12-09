@@ -3,6 +3,8 @@
 This repository contains the implementation accompanying our paper FSDA-DETR: Few-shot Domain Adaptive Object Detection Transformer in Remote Sensing Imagery.
 
 
+![](/figs/CSR_module.png)
+
 ## Acknowledgment
 This implementation is bulit upon [DINO](https://github.com/IDEA-Research/DINO/).
 
