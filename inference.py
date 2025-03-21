@@ -98,8 +98,8 @@ def make_dirs(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
-model_config_path = "/data7/binbinyang/DINO-Few-shot-DA_混合训练策略_CMA_特征对齐/config/DA/HRRSD2SSDD/DINO_4scale.py" # change the path of the model config file
-model_checkpoint_path = "/data7/binbinyang/DINO-Few-shot-DA_混合训练策略_CMA_特征对齐/logs/10.31_18张补充实验2_HRRSD2SSDD__更改为韩师兄所用域鉴别器_损失部分不改动_只对前2层引入风格聚类的思想_韩师兄所用域鉴别器_36_epoches_DINO_HRRSD2SSDD_目标域混合训练_特征对齐/R50-MS4/checkpoint0016.pth" # change the path of the model checkpoint
+model_config_path = "" # change the path of the model config file
+model_checkpoint_path = "" # change the path of the model checkpoint
 
 # See our Model Zoo section in README.md for more details about our pretrained models.
 args = SLConfig.fromfile(model_config_path)
@@ -118,8 +118,8 @@ transform = T.Compose([
 ])
 
 if __name__ == '__main__':
-    img_dir = '/data4/ybb/data/域适应目标检测/remote_sensing_data/SSDD_Few_shot/val/images'
-    save_dir = '/data7/binbinyang/DINO-Few-shot-DA_混合训练策略_CMA_特征对齐/AsyFOD推理结果图_HRRSD2SSDD'
+    img_dir = ''
+    save_dir = ''
 
 
     label_list = ['ship']
