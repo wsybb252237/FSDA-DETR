@@ -68,4 +68,4 @@ python inference.py
 
 
 ## 🔗 Reference
-https://github.com/IDEA-Research/DINO”
+https://github.com/IDEA-Research/DINO
