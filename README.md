@@ -25,38 +25,47 @@ BibTeX:
 ![](/figs/CSR_module.png)
 
 ## 🙏 Acknowledgment
-
-This implementation is built upon [DINO](https://github.com/IDEA-Research/DINO/).
-
----
+This implementation is bulit upon [DINO](https://github.com/IDEA-Research/DINO/).
 
 ## ⚙️ Installation
+Please refer to the instructions [here](requirements.txt). We leave our system information for reference.
 
-Please refer to the instructions in [requirements.txt](requirements.txt). We leave our system configuration below for reference:
-
-- 🖥️ OS: Ubuntu 20.04  
-- 🐍 Python: 3.9.19  
-- 🔧 CUDA: 12.2  
-- 🔥 PyTorch: 2.1.0  
-- 🎧 torchaudio: 2.1.0  
-- 🖼️ torchvision: 0.16.0  
-
----
+* OS: Ubuntu 20.04
+* Python: 3.9.19
+* CUDA: 12.2
+* PyTorch: 2.1.0
+* torchaudio：2.1.0
+* torchvision: 0.16.0
 
 ## 📁 Dataset Preparation
+Please construct the datasets following these steps:
 
-Please construct the datasets following the steps below:
+- Download the datasets from their sources.
 
-1. 📥 **Download** the datasets from their official sources.
-2. 🧩 **Convert** annotation files into **COCO format**.
-3. 🛠️ **Modify** dataset path in [`coco_FSDA.py`](./datasets/coco_FSDA.py).
-4. 📂 Dataset scenes are listed in [`__init__.py`](./datasets/__init__.py).
+- Convert the annotation files into COCO-format annotations.
 
----
+- Modify the dataset path setting within the script [coco_FSDA.py](./datasets/coco_FSDA.py)
 
-## 🏋️ Training
+- All the scenes can be found within the script [__init__.py](./datasets/__init__.py).
 
-### 🔹 Train with Single GPU
-```bash
+
+  - Training with single GPU
 sh scripts/xView2DOTA/DINO_train.sh
 
+- Training with Multi-GPU
+sh scripts/xView2DOTA/DINO_train_dist.sh
+
+
+We provide an evaluation script to evaluate the pre-trained model. --dataset_file is used to specify the test dataset, and --resume is used to specify the path for loading the model.
+- Evaluation Model.
+sh scripts/DINO_eval.sh
+
+
+
+We provide inference script to visualize detection results. See [inference.py](inference.py) for details
+- Inference Model.
+python inference.py
+
+
+## 🔗 Reference
+https://github.com/IDEA-Research/DINO”
