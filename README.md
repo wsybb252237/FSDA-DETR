@@ -48,15 +48,19 @@ Please construct the datasets following these steps:
 
 - All the scenes can be found within the script [__init__.py](./datasets/__init__.py).
 
+## 🏋️ Training
 
 - Training with single GPU
+*(Example: Cross-satellite domain adaptation task)*
 ```
 sh scripts/xView2DOTA/DINO_train.sh
 ```
 - Training with Multi-GPU
+*(Example: Cross-satellite domain adaptation task)*
 ```
 sh scripts/xView2DOTA/DINO_train_dist.sh
 ```
+## 🔎 Inference
 
 We provide an evaluation script to evaluate the pre-trained model. --dataset_file is used to specify the test dataset, and --resume is used to specify the path for loading the model.
 - Evaluation Model.
