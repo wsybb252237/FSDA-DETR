@@ -2,6 +2,23 @@
 
 This repository contains the implementation accompanying our paper FSDA-DETR: Few-shot Domain Adaptive Object Detection Transformer in Remote Sensing Imagery.
 
+## 📄 Citation
+
+If you find this project useful in your research, please consider citing our paper:
+
+BibTeX:
+```bibtex
+@ARTICLE{11016953,
+  author={Yang, Binbin and Han, Jianhong and Hou, Xinghai and Zhou, Dehao and Liu, Wenkai and Bi, Fukun},
+  journal={IEEE Transactions on Geoscience and Remote Sensing}, 
+  title={FSDA-DETR: Few-shot Domain Adaptive Object Detection Transformer in Remote Sensing Imagery}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Remote sensing;Feature extraction;Object detection;Detectors;Training;Adaptation models;Benchmark testing;Visualization;Training data;Prototypes;Few-shot;Domain Adaptive;Object Detection;remote sensing imagery},
+  doi={10.1109/TGRS.2025.3574245}
+}
 
 ![](/figs/CSR_module.png)
 
