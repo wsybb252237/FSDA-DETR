@@ -50,22 +50,26 @@ Please construct the datasets following these steps:
 
 
   - Training with single GPU
+```
 sh scripts/xView2DOTA/DINO_train.sh
-
+```
 - Training with Multi-GPU
+```
 sh scripts/xView2DOTA/DINO_train_dist.sh
-
+```
 
 We provide an evaluation script to evaluate the pre-trained model. --dataset_file is used to specify the test dataset, and --resume is used to specify the path for loading the model.
 - Evaluation Model.
+```
 sh scripts/DINO_eval.sh
-
+```
 
 
 We provide inference script to visualize detection results. See [inference.py](inference.py) for details
 - Inference Model.
+```
 python inference.py
-
+```
 
 ## 🔗 Reference
 https://github.com/IDEA-Research/DINO
