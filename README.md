@@ -20,7 +20,8 @@ BibTeX:
   doi={10.1109/TGRS.2025.3574245}
 }
 
-![](/figs/CSR_module.png)
+## 🖼️ Method Overview
+![CSR Module](figs/CSR_module.png)
 
 ## Acknowledgment
 This implementation is bulit upon [DINO](https://github.com/IDEA-Research/DINO/).
