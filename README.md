@@ -49,7 +49,7 @@ Please construct the datasets following these steps:
 - All the scenes can be found within the script [__init__.py](./datasets/__init__.py).
 
 
-  - Training with single GPU
+- Training with single GPU
 ```
 sh scripts/xView2DOTA/DINO_train.sh
 ```
