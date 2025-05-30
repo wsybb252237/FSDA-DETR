@@ -21,7 +21,7 @@ BibTeX:
 }
 
 ## 🖼️ Method Overview
-![CSR Module](figs/CSR_module.png)
+![](/figs/CSR_module.png)
 
 ## Acknowledgment
 This implementation is bulit upon [DINO](https://github.com/IDEA-Research/DINO/).
