@@ -11,14 +11,15 @@ BibTeX:
 @ARTICLE{11016953,
   author={Yang, Binbin and Han, Jianhong and Hou, Xinghai and Zhou, Dehao and Liu, Wenkai and Bi, Fukun},
   journal={IEEE Transactions on Geoscience and Remote Sensing}, 
-  title={FSDA-DETR: Few-shot Domain Adaptive Object Detection Transformer in Remote Sensing Imagery}, 
+  title={FSDA-DETR: Few-Shot Domain-Adaptive Object Detection Transformer in Remote Sensing Imagery}, 
   year={2025},
-  volume={},
+  volume={63},
   number={},
-  pages={1-1},
-  keywords={Remote sensing;Feature extraction;Object detection;Detectors;Training;Adaptation models;Benchmark testing;Visualization;Training data;Prototypes;Few-shot;Domain Adaptive;Object Detection;remote sensing imagery},
+  pages={1-16},
+  keywords={Domain adaptive;few-shot;object detection;remote sensing imagery},
   doi={10.1109/TGRS.2025.3574245}
 }
+
 ```
 
 ## 🖼️ Method Overview
